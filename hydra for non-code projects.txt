@@ -1,0 +1,7 @@
+If it works on code, it works on everything
+
+Hydra wants, like emacs, to grow until it checks your mail. That's because operational transformation of parse trees in context-sensitive ways turns out to be an exceedingly general paradigm.
+
+That's why we're using WebKit (or something, but node-webkit seems to be where it's at for now) for the View layer. The priority is getting the underlying mechanics working, but after that, building tools to visually compose and style HTML/CSS/JS pairings is an obvious extension. SVG editors, CAD packages, basically if it can be modelled as operational transformation of a parsable text file it's an excellent fit. Binary files are in many cases just as easy, although it's not always going to be a meaningful and convenient fit.
+
+I mean, it comes out of the box with Clojure and JS exposed to the user. There's nothing you can't do with it. But there are a number of formats whose output is other than software which can benefit from the Hydra approach.  

@@ -1,0 +1,25 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf370
+{\fonttbl\f0\fnil\fcharset0 Inconsolata;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww16600\viewh10560\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\f0\fs40 \cf0 code forensics\
+\
+Hydra has two OT trees: the tree for the state of Hydra, and the tree for the state of code. Going backwards in Hydra state is called undo; going backwards in code state is called revert. They work differently.\
+\
+For instance, if I copy and paste a function, then undo, it will unpaste it back to the kill ring and then if I undo again delete the copy entirely. These are, naturally, reversible moves through an immutable landscape, where redo presents options if there is more than one path forward. \
+\
+If I copy and paste a function, then revert, it will undo the latest edit performed on the function's parse tree, whatever that might be. Revert far enough, and I'm left with the first token that matched a rule that eventually became the function node. \
+\
+This is why we do OTs on the parse tree, not the flat file. It would be possible in principle to fake this with flat file OT: you copy and paste a buffer, it includes an offset range, and any edit commands that happen to deal with that region of the file get copied over. The Big O of this algorithm is not favourable to snappy performance without a great deal of overhead and book keeping. \
+\
+Logically a single edit is stored in one place with three references to it: the project level reference is an array containing the parse-level transformations as an absolute reference to the node and the change to the representation string, the node-level reference stores the change to the representation string and the absolute time (index to the project level array). The third reference is the Hydra state machine action that was taken to produce the transformation.\
+\
+Parse-tree OTs always OT the state tree, but the reverse is not true. If you change the color of a syntax type, for instance, you can undo it, but it isn't on the revert queue, since it didn't change the project. \
+\
+So this is a workflow. You can copy a function to a new buffer, revert it to an earlier stage, make changes, and put the function back. If you do reverts on it the project, you will get to a point where it will leap into its own buffer, which is the end of where you were making the changes.\
+\
+This means if you're reading someone else's codebase, and you're wondering exactly how a function got to be the way it is, you can look at the entire edit history of just the function, whenever you want. This applies to all code blocks.\
+\
+That, not time travel paradoxes, is 'why Hydra' in a nutshell. }

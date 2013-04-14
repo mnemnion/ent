@@ -1,0 +1,7 @@
+Minimum demonstration of Hydra
+
+To show the viability of the Hydra project, we make it work on JSON. 
+
+JSON is easy to parse and doesn't beg for much special compiler behavior. It's useful as-is and easy to OT. This keeps things simple where all the complexity comes together.
+
+First, we make or grab an antlr for JSON, then we use that to build the inter

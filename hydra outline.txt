@@ -1,0 +1,51 @@
+Hydra: an editor with many heads.
+
+Dependencies:
+
+Gui and JS console: node-webkit
+Code comprehension: Antlr
+Logic: Clojure
+Package Management: brew/apt-get
+Version Control: git
+Configuration: JSON
+Engines: V8(view), JRE(controller), something(model)
+
+All actions are operational transformations.
+
+Premise: editing code is only incidentally a textual process. Editors which are aware of the structure of the code are nothing new, but they are based, fundamentally, on a mutable filesystem containing equally mutable text files. 
+
+These text files become the canonical form of the code, with dependencies, versioning, and other essentials bolted on. This is worth rethinking at a very basic level. 
+
+A Hydra project is a series of operational transformations. One of the resulting products is an ordinary code repository, versioned with git. Another is the software in question. 
+
+Operational transformation is nothing new, and it is conceptually simple to edit a text stream in this way, collaboratively or otherwise. Our OT will operate on the parse tree; a flat tree consisting of all characters (text editing as we know it) is a degenerate case.
+
+Hydra will make an excellent editor for plain text files, but is fundamentally modal and designed for close interoperation with the languages it supports.
+
+The general idea is that Hydra comprehensively parses the 'file' you're editing (it's really a database record) and, in general, only allows legal input. This is less annoying than it sounds; if you're editing JSON and the editor expects a key/value pair, and you start typing alphanumerics, it will put your input in quotes, add a colon, put a comma after that, and a single right arrow will put you in the value region. That's what I'd want an editor to do, but of course, default logic can be overridden.  
+
+The logic of Hydra will be written entirely in Clojure and will be fully functional. It will be impossible to execute an action that is not an operational transformation on Hydra itself or any data it is managing, from within Hydra. Since we're going to be working on stateful code, we cannot guarantee that all actions have no side effects, but we can and will eliminate them from Hydra per se, and from all data it manages.
+
+Put differently, you will always be able to rewind Hydra to any point, and execute from that point, and get a guarantee that it will do the same thing it did last time. If it tells a backhoe to dig a hole, the backhoe will try and dig the same hole. This will work up and down branches, and given the mutability of the world generally, is the only guarantee Hydra can sensibly make. 
+
+This will make interacting with webkit dangerous, but this is the only sensible way forward. We should be able to guarantee that the GUI elements used by Hydra itself do not produce side effects, but it isn't necessarily easy. 
+
+In order to be a useful code creator, we need a browser engine inline anyway. It's cleaner to use this for all rendering. 
+
+In MVC terms, the View is rendered using webkit (blink?) on v8/node, the Controller is written in Clojure on the JVM, and the Model is preserved in an OT database with larger changes (what we think of as saves or commits) synchronized using git or hg. 
+
+For good interop, our languages need to target either the JVM or JavaScript. Fortunately with Enscripten and the proliferation of JVM ports, we get a lot of coverage this way. Interpreted C++ on JS may not be fast, but it can be made to serve for integrated development, debugging and the like. It will be easy to set up external build rules but since they fall out of the OT preservation, it won't allow us to do voodoo like "what happened during that debug run last week when I changed that particular parameter"? 
+
+That's the magic of OT; you don't store every debug run, which could get prohibitive, but you do store every single user input, ever, unless explicitly deleted. 
+
+To repeat the premise: the parse tree, and the operational transformations that produce it, are the canonical form of the project. The code is one product, no different in principle from any other targeted compilation. In practice the relationship between code and AST/OT is privileged by the use of revision control: In general, every time the code base is frozen, the Hydra state machine will use that freeze when undoing and redoing OTs. That is, if you are trying to go back 20,000 steps, and you have a code freeze 300 steps ahead of that point, the state machine will load and parse the code freeze (which includes a flash of the state of the machine itself, naturally) and undo 300 transformations, instead of undoing all 20,000.
+
+The editor will have two basic modes: opinionated and permissive. In permissive mode, you edit the source as mutable text, with all changes (by default and best practice) highlighted in a distinct color. Parsing happens manually, or when entering opinionated mode. 
+
+A permissive edit looks like (enter-permissive-mode, change-text, parse-on-exit-permissive-mode) from the OT perspective. That is, you enter permissive, edit text as much as you like, and parse it. 
+
+In opinionated mode, the editor is completely modal, as dictated by the parser. In general, it will only let you type valid code, will generate all tokens needed, and allow for flexible traversal. Best practice says that typing verbatim correct code should produce the expected result.
+
+Let's take a JSON example. If you type '{' in opinionated mode, you get a '{_}' where _ is the cursor. If you type a bare letter, say 'f', you get "{'f_':**}" where ** is the next expected field, which would be a different background color. Finish typing 'foo' and hit either -> or : to get to the next field, and type 'b', you get "{'foo' : 'b' **}", finish typing 'bar' and you have "{'foo' : 'bar_'**}". So far so good; the editor would also accept additional whitespacing if you choose to add it.
+
+If you right cursor (or single quote) and start typing another bare letter, like 'q', you get "{'foo' : 'bar', 'q_' : **}. If you type '}' instead, you get {'foo': 'bar'}_. There may be another target, depending on the context your cursor finds itself in. If you start typing a number instead, you'd get {'foo' : 'bar', '4'_ : **}, but if you were in the value field, you'd get "{'foo' : 'bar, 'qux' : 4_}**. 

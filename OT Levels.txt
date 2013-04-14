@@ -1,0 +1,13 @@
+OT Levels
+
+This is not a secret Scientology text. Honest squirrel.
+
+Hydra uses operational transformation in at least two ways. The first is on the parse tree, the second is on the Hydra state machine. Every action on Hydra is OT compliant; some of those actions transform the parse tree, which updates accordingly. 
+
+We use OT because functional thinking is correct. It proves that correctness through numerous benefits. A benefit of OT state in Hydra itself is that any series of actions taken can be saved and repeated. One needn't program a macro; it is sufficient to realise that you want to do the same thing you did before, rewind state to find it, and yank.
+
+Once Hydra reaches a stable state, every Hydra instance will by default have a complete history of every input it has ever received. This is how computer should work; it is Loper's Second Law, and Hydra, if it is to be any child of mine, must advance Loper's Seven Laws of Personal Computing.
+
+A place where these interact is the clip buffer. In opinionated mode, one can only select whole nodes, and copying both pushes a copy of the text to the operating system clipboard and adds a reference to the node to the clip buffer stack. Pasting OTs the node into place, with a history that stretches back into the copied project. 
+
+A point: there is only one history prior to the copy-paste, and after, each node goes its own way. It's a lot like mitosis, which would be a good word for the operation. Cut/paste is the same, except the original node is also deleted. 

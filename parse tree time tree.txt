@@ -1,0 +1,22 @@
+Parse Tree and Time Tree
+
+Operational Transformations are the canonical way to synchronize simultaneous edits of a single document. Google Docs and Wave are based on this premise. 
+
+This would make a fine way to write a collaborative editor for pair programming. Indeed, this has been done. 
+
+This is still flat editing, however. If you move a block from one place in a file to another, you have deleted some characters and inserted some characters. Inferring a connection between these actions is not necessarily a straightforward thing. While OT in this case does an admirable job of (eventually) producing a canonical, synchronized version of a file, doing sensible things with conflicting input, it doesn't even begin to help us with the interesting things we want to do.
+
+OT works as well or better on a tree as it does on a flat file, but one cannot have it both ways. You're either adding 'foo' to position (n) in a file or you're adding 'foo' to position (n) in the value of a node. 
+
+What's interesting about this is that the parse tree of a program changes in substantially different ways from the OT graph of character-level changes to the file. 
+
+This is heady stuff, and a concrete example will help. Let's say you have a function called fooBad, and you need to change its name to fooGood. Normally, you'd do some variation of grepping for all instances of fooBad and replacing them with fooGood. Various editors offer sugar for this.
+
+In Hydra, you go back in time to when you named it fooBad, and you name it fooGood instead. You then attempt to propagate the change; in the general case, it succeeds. Here's why.
+
+Every time the parser creates a new node, it gives it a single, immutable identity. Eventually, it discovers that this node is a function, with the name fooBad. As long as fooBad remains a function, it *and all references to it* retain that common identity. This is what parsers do, or what parsers can do. 
+
+This ability, generalized, is more powerful than we deserve or can wisely use. It's metaprogramming with time, and the gain to pain ratio may well be high. It isn't the point of OTing a parse tree, but it has applications. Consider creating a JSON config file, copying and pasting snippets of it all over, and having a library rename a call that you originally wrote once but now have put in (potentially) dozens of different places. 
+
+These things happen. Retaining the history of a copy-pasted snippet, in particular, will prove phenomenally powerful.
+
