@@ -1,7 +1,6 @@
 #An introduction to ent#
 
-ent is a new approach to code creation. It is (will be) an editor and library that works on parse trees, rather than on files, and registers all changes as 
-[operational transformations][1]. It does so through the medium of familiar code files, but these may be thought of as an interface to the code, and as a product of it, similar to the executable binaries produced by a compiler. 
+ent is a new approach to code creation. It is (will be) an editor and library that works on parse trees, rather than on files, and registers all changes as [operational transformations][1]. It does so through the medium of familiar code files, but these may be thought of as an interface to the code, and as a product of it, similar to the executable binaries produced by a compiler. 
 
 [1]: http://www.codecommit.com/blog/java/understanding-and-applying-operational-transformation
 
@@ -82,6 +81,12 @@ Even a small amount of structure can be useful. If we divide English into words,
 
 Importantly, even a poor or ambiguous grammar will work, as long as the parser's output is deterministic. The guarantee that ent will make you is that any tree it makes, if walked from left to right, will give you your string back. 
 
+
+###Branch and Merge
+
+Because ent uses operational transformation, two ents can operate on the same codebase simultaneously. This is exciting, but not the rationale. OT is used in products like Google Docs so that, if network problems cause two user edit streams to diverge, the edits can be merged automatically into a single canonical document as soon as connectivity is restored. 
+
+In ent, this represents a degenerate use case
 
 
 
