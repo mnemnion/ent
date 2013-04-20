@@ -61,7 +61,7 @@ We would like to be in a state where we interact with immutable trees that embod
 What is holding us back is that flat files are the ubiquitous interface between tools in the programming chain, and they are mutable by default (indeed, to a fault). ent aims to do the least possible to allow the move to immutable tree-based code structure while maintaining flat files in a sensible state and allowing other tools to act on and transform those files as input into the code structure. 
 
 
-###Deep Waters#
+###Deep Waters
 
 This is not a trivial move. If we were free to design our own ball game, we could start with immutable data types, define transformations on them, and start snowballing. 
 
@@ -98,6 +98,8 @@ With ent, the user does not have to decide to branch. They may simply rewind to 
 
 That's why we still use git within ent, for the record; when you start doing time travel, you start to wonder, sometimes, what reality used to look like. git, enslaved to ent, will serenely keep track of all this. 
 
+###Time travel
+
 Here's some unavoidable terminology: in ent world, there are two universes. In Universe A, time is entropic, irreversible, and can only be queried as to prior state (and only through the mechanism of recording that prior state). In Universe B, time is reversible and mutable, with a higher order that immutably tracks the paths of that mutation and can unwind the skein accordingly. 
 
 What? Say I have a file, and I rewind time to rename a function foo() to bar(). I have a path of git revisions that say that at such-and-such a time, my file structure contains certain data. Since I haven't done any time traveling (it's not for the faint of heart), Universe A (git land) is the same as Universe B (ent space). 
@@ -105,6 +107,14 @@ What? Say I have a file, and I rewind time to rename a function foo() to bar(). 
 So I rewind time, past several git boundaries, and merge. It works. Now, if I go back in time in Universe B, my function is called bar(). If I go back in time in Universe A, my function is called foo(), until the moment that I went back in time, at which point it's called baz(). 
 
 Universe A is reality, as it happened. Universe B is reality as we wish it happened. They are a powerful team. 
+
+###Branch and Merge, again
+
+The model is in principle no different when multiple authors work on one code base. ent tracks who made each change, in addition to what the change is, as part of the atomic transformation. 
+
+To the degree that one ent is aware of another, they may trade branches. Moreover, when changes are propagated up the time stream, they may be offered to such other ents as the propagating ent may be aware. 
+
+That's a lot of maybes. This is code we're talking about; handle with care. The current paradigm is pull-only for revisions; ent can provide notifications that changes are available, and hand those changes off, but pushing code willy-nilly is a bad habit to get into. 
 
 
 
