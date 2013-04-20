@@ -84,9 +84,28 @@ Importantly, even a poor or ambiguous grammar will work, as long as the parser's
 
 ###Branch and Merge
 
-Because ent uses operational transformation, two ents can operate on the same codebase simultaneously. This is exciting, but not the rationale. OT is used in products like Google Docs so that, if network problems cause two user edit streams to diverge, the edits can be merged automatically into a single canonical document as soon as connectivity is restored. 
+Because ent uses operational transformation, it provides great flexibility and control in branching and merging. OT is used in products like Google Docs so that, if network problems cause two user edit streams to diverge, the edits can be merged automatically into a single canonical document as soon as connectivity is restored. 
 
-In ent, this represents a degenerate use case
+ent approaches OT differently. Where Docs etc. are concerned with synchronizing multiple versions of a single canonical file in near-real time, ent uses OT to flexibly handle multiple branches and merges of a single code base, which may be replicated elsewhere with optional differences. 
+
+It is the same underlying algorithm, and it leads to a substantially different approach to branching and merging than that embodied in programs like git. Ultimately, ent enables time travel; you may return to any point in the history of your project, make revisions and changes, and propagate them, with control, back to the front of the project.
+
+Let's contrast this with git. In git, to make a branch, you tell git you want to make a branch. git takes a snapshot and starts tracking changes under a different name. If you revert to the original branch, it goes back to the snapshot and tracks a different set of changes. When you merge, if all goes well, all the changes from both branches are reflected in the new file structure.
+
+With ent, the user does not have to decide to branch. They may simply rewind to the point where an alternate path is helpful, create it, and merge. If all goes well, you have a new reality, in which the old edits happened in the past. 
+
+That's why we still use git within ent, for the record; when you start doing time travel, you start to wonder, sometimes, what reality used to look like. git, enslaved to ent, will serenely keep track of all this. 
+
+Here's some unavoidable terminology: in ent world, there are two universes. In Universe A, time is entropic, irreversible, and can only be queried as to prior state (and only through the mechanism of recording that prior state). In Universe B, time is reversible and mutable, with a higher order that immutably tracks the paths of that mutation and can unwind the skein accordingly. 
+
+What? Say I have a file, and I rewind time to rename a function foo() to bar(). I have a path of git revisions that say that at such-and-such a time, my file structure contains certain data. Since I haven't done any time traveling (it's not for the faint of heart), Universe A (git land) is the same as Universe B (ent space). 
+
+So I rewind time, past several git boundaries, and merge. It works. Now, if I go back in time in Universe B, my function is called bar(). If I go back in time in Universe A, my function is called foo(), until the moment that I went back in time, at which point it's called baz(). 
+
+Universe A is reality, as it happened. Universe B is reality as we wish it happened. They are a powerful team. 
+
+
+
 
 
 
