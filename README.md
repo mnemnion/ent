@@ -11,7 +11,7 @@ ent's major rationale is parse-awareness. It will, in general, not allow you to 
 A simple example in JSON  will get us started. We are editing this file:
 
 ```JSON
-[  {"foo":bar},
+[  {"foo":"bar"},
    _
 ]
 ```
@@ -21,7 +21,7 @@ Where '_' represents the cursor. We type '{'.
 Because we are in an Array context, and the only rule that can match { is Object, we get:
 
 ```JSON
-[  {"foo":bar},
+[  {"foo":"bar"},
    {_:**}
 ]
 ```
@@ -31,7 +31,7 @@ where "**" represents the target, which is the next place that ent expects us to
 We now type 'q'. Because we are in the Key context of an Object, this is not valid. But ent is friendly, so we get this:
 
 ```JSON
-[  {"foo":bar},
+[  {"foo":"bar"},
    {"q_":**}
 ]
 
@@ -41,7 +41,7 @@ Since JSON expects a string, the "" would actually be auto-inserted after the '{
 We continue typing 'ux' to give 'qux'. Either " or the right arrow key closes the string and gets us to our target:
 
 ```JSON
-[  {"foo":bar},
+[  {"foo":"bar"},
    {"qux":_} **
 ]
 ```
