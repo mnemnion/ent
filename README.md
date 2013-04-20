@@ -37,6 +37,8 @@ We now type 'q'. Because we are in the Key context of an Object, this is not val
 ```
 Since JSON expects a string, the "" would actually be auto-inserted after the '{'. This example was somewhat contrived to show how ent can handle erroneous input through parse awareness.
 
+Note, as an aside, that git's JSON lexer identifies ** as an error. This points to the advantage of parse aware editing, which can go far beyond syntax highlighting (as well as getting that task more correct than line-based regexes can).
+
 We continue typing 'ux' to give 'qux'. Either " or the right arrow key closes the string and gets us to our target:
 
 ```JSON
