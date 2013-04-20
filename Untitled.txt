@@ -1,7 +1,0 @@
-the metaparser
-
-Hydra will have a metaparser, which takes a file and decides what kind of format it's in. 
-
-This will be fun to write: it's a series of parser rules, the order and structure of which is designed to eliminate ambiguity between language files by matching distinctive structures. 
-
-In fact, to really make Hydra into the many-headed beast it should be, all parsers should be branches from a single ur parser that accepts all input as a sequence of bytes. 

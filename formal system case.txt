@@ -1,5 +1,0 @@
-A programming language is a formal system. The best way to make correct statements in a formal system is to never emit an incorrect statement. We made an evolutionary leap past batch processing to interactive editing with a separate compile/run/debug cycle, then another one with the REPL. Hydra, by constraining output in the opinionated mode and doing operational transformations directly on the parse tree, moves to another level.
-
-Take something as simple as JSON: in opinionated mode, you simply cannot modify the buffer into something that isn't valid JSON or well on its way. If you stop before it's valid, it will ask you to continue. That is dramatically different from our expectations about a text editor. 
-
-It's easy to see the utility and value for a JSON editor, but using Hydra with any given language is in principle the same thing. In practice, the more syntax a language uses, the more work the parser has to do in order to keep up.  
