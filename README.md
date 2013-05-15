@@ -104,7 +104,7 @@ Here's some unavoidable terminology: in ent world, there are two universes. In U
 
 What? Say I have a file, and I rewind time to rename a function foo() to bar(). I have a path of git revisions that say that at such-and-such a time, my file structure contains certain data. Since I haven't done any time traveling (it's not for the faint of heart), Universe A (git land) is the same as Universe B (ent space). 
 
-So I rewind time, past several git boundaries, and merge. It works. Now, if I go back in time in Universe B, my function is called bar(). If I go back in time in Universe A, my function is called foo(), until the moment that I went back in time, at which point it's called baz(). 
+So I rewind time, past several git boundaries, and merge. It works. Now, if I go back in time in Universe B, my function is called bar(). If I go back in time in Universe A, my function is called foo(), until the moment that I went back in time, at which point it's called bar(). 
 
 Universe A is reality, as it happened. Universe B is reality as we wish it happened. They are a powerful team. 
 
