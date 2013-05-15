@@ -116,6 +116,9 @@ To the degree that one ent is aware of another, they may trade branches. Moreove
 
 That's a lot of maybes. This is code we're talking about; handle with care. The current paradigm is pull-only for revisions; ent can provide notifications that changes are available, and hand those changes off, but pushing code willy-nilly is a bad habit to get into. 
 
+That said, there is often a clear division between fixing mistakes in code and extending / changing functionality. It is often the case that library updates will fix broken things and break working things, and careful use of ent can separate these concerns, by rewinding a local tree to the point where bad input was created and correcting the mistake. 
+
+In the real world, code sometimes depends on buggy behavior, and in this case, you simply rewind the edit and are stuck in the familiar position of having to either freeze the library or change your local codebase. Either way, merely providing the distinction between 'this is as things always should have been' and 'this is how we want things to be now' can prove powerful. 
 
 
 
